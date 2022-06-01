@@ -17,11 +17,11 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.on('playerOneMoves', (moves) => {
-      io.to(room).emit('playerOneMoves', moves);
+      socket.to(room).emit('playerOneMoves', moves);
     });
 
     socket.on('playerTwoMoves', (moves) => {
-      io.to(room).emit('playerTwoMoves', moves);
+      socket.to(room).emit('playerTwoMoves', moves);
     });
 
     socket.on('turn', () => {
