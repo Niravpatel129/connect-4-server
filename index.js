@@ -18,6 +18,8 @@ io.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.join(room);
 
+  });
+  
     socket.on('playerOneMoves', (moves) => {
       socket.to(room).emit('playerOneMoves', moves);
     });
@@ -37,7 +39,6 @@ io.on('connection', (socket) => {
     socket.on('winner', (winner) => {
       io.to(room).emit('winner', winner);
     });
-  });
 });
 
 server.listen(process.env.PORT || 4000, () => {
