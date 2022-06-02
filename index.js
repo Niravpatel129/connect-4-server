@@ -17,28 +17,27 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.join(room);
-
   });
-  
-    socket.on('playerOneMoves', (moves) => {
-      socket.to(room).emit('playerOneMoves', moves);
-    });
 
-    socket.on('playerTwoMoves', (moves) => {
-      socket.to(room).emit('playerTwoMoves', moves);
-    });
+  socket.on('playerOneMoves', (moves) => {
+    socket.broadcast.to(room).emit('playerOneMoves', moves);
+  });
 
-    socket.on('turn', () => {
-      socket.broadcast.to(room).emit('turn', true);
-    });
+  socket.on('playerTwoMoves', (moves) => {
+    socket.broadcast.to(room).emit('playerTwoMoves', moves);
+  });
 
-    socket.on('reset', () => {
-      io.to(room).emit('reset');
-    });
+  socket.on('turn', () => {
+    socket.broadcast.to(room).emit('turn', true);
+  });
 
-    socket.on('winner', (winner) => {
-      io.to(room).emit('winner', winner);
-    });
+  socket.on('reset', () => {
+    io.to(room).emit('reset');
+  });
+
+  socket.on('winner', (winner) => {
+    io.to(room).emit('winner', winner);
+  });
 });
 
 server.listen(process.env.PORT || 4000, () => {
